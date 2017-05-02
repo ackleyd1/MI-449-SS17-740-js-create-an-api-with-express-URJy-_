@@ -1,13 +1,13 @@
 module.exports = {
-  1: {
+  'study-for-331': {
     text: 'Study for 331',
     completed: false
   },
-  2: {
+  'study-for-320': {
     text: 'Study for 320',
     completed: false
   },
-  3: {
+  'ecommerce-project': {
     text: 'eCommerce Project',
     completed: true
   }

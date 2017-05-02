@@ -18,26 +18,27 @@ app.get('/todos', function (request, response) {
 })
 
 app.post('/todos', function (request, response) {
-  var id = Object.keys(todos).length
-  todos[id] = {
+  var slug = request.body.text.trim().toLowerCase().split(' ').join('-')
+  todos[slug] = {
     text: request.body.text.trim(),
     completed: request.body.completed
   }
+  response.redirect('/todos')
 })
 
-app.get('/todos/:id', function (request, response) {
-  var todo = todos[request.params.id]
+app.get('/todos/:slug', function (request, response) {
+  var todo = todos[request.params.slug]
   if (!todo) {
-    response.status(404).end('sorry, no such todo')
+    response.status(404).end('sorry, no such todo: ' + request.params.slug)
     return
   }
   response.json(todo)
 })
 
-app.put('/todos/:id', function (request, response) {
-  var todo = todos[request.params.id]
+app.put('/todos/:slug', function (request, response) {
+  var todo = todos[request.params.slug]
   if (!todo) {
-    response.status(404).end('sorry, no such todo')
+    response.status(404).end('sorry, no such todo: ' + request.params.slug)
     return
   }
   if (request.body.text !== undefined) {
@@ -51,13 +52,13 @@ app.put('/todos/:id', function (request, response) {
   response.redirect('/todos')
 })
 
-app.delete('/todos/:id', function (request, response) {
-  var todo = todos[request.params.id]
+app.delete('/todos/:slug', function (request, response) {
+  var todo = todos[request.params.slug]
   if (!todo) {
-    response.status(404).end('sorry, no such todo')
+    response.status(404).end('sorry, no such todo: ' + request.params.slug)
     return
   }
-  delete todos[request.params.id]
+  delete todos[request.params.slug]
   response.redirect('/todos')
 })
 
